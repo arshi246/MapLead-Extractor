@@ -85,6 +85,15 @@ python main.py --keyword "builders" --location "London, UK" --target 25 --enrich
 
 The command stores Place IDs in `output/place_ids.csv` and, with `--enrich`, creates `output/full_leads.xlsx`.
 
+## Limitations
+
+- Google may return fewer businesses than the requested target because of ranking, location coverage, duplicate results, and API pagination limits.
+- Phone numbers, websites, addresses, and other fields are included only when Google provides them for a business; unavailable fields remain blank in Excel.
+- Each search and place-details request consumes Google Maps Platform quota and may incur billing charges.
+- The project requires an enabled **Places API (New)**, active billing, and an API key whose restrictions allow the server to make requests.
+- High request volume can trigger quota or rate limits. The client retries temporary failures, but persistent limits must be resolved in Google Cloud.
+- Business data can change over time; rerun an extraction when you need updated results.
+
 ## Tests
 
 ```powershell
@@ -107,4 +116,3 @@ python -m py_compile api_client.py config.py enrich_leads.py exporter.py main.py
 | HTTP 401/403 | Verify API enablement, billing, key restrictions, and quota. |
 | Excel is not created | Run `pip install -r requirements.txt` to install `openpyxl`. |
 | Fewer leads than target | Google may return fewer matching or unique results. |
-
